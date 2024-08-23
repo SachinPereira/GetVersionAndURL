@@ -12,7 +12,7 @@ jobs:
         id: extract
         run: |
           ISSUE_BODY="${{ github.event.issue.body }}"
-          URL=$(echo "$ISSUE_BODY" | grep -oP 'http://\S+')
+          URL=$(echo "$ISSUE_BODY" | grep -oP 'https://\S+')
           VERSION=$(echo "$ISSUE_BODY" | grep -oP 'Version:\s*\K\S+')
           echo "$URL"
           echo "$VERSION"
