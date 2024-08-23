@@ -14,8 +14,8 @@ jobs:
           ISSUE_BODY="${{ github.event.issue.body }}"
           URL=$(echo "$ISSUE_BODY" | grep -oP 'http://\S+')
           VERSION=$(echo "$ISSUE_BODY" | grep -oP 'version:\s*\K\S+')
-          echo "::set-output name=url::$URL"
-          echo "::set-output name=version::$VERSION"
+          echo "$URL"
+          echo "$VERSION"
 
   use-extracted:
     needs: extract
