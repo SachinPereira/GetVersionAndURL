@@ -1,0 +1,27 @@
+name: Extract URL and Version
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract URL and Version
+        id: extract
+        run: |
+          ISSUE_BODY="${{ github.event.issue.body }}"
+          URL=$(echo "$ISSUE_BODY" | grep -oP 'http://\S+')
+          VERSION=$(echo "$ISSUE_BODY" | grep -oP 'version:\s*\K\S+')
+          echo "::set-output name=url::$URL"
+          echo "::set-output name=version::$VERSION"
+
+  use-extracted:
+    needs: extract
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Extracted Values
+        run: |
+          echo "URL: ${{ steps.extract.outputs.url }}"
+          echo "Version: ${{ steps.extract.outputs.version }}"
